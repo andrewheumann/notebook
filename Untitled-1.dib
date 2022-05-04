@@ -1,0 +1,20 @@
+#!csharp
+
+#r "nuget: Hypar.Elements"
+
+#!csharp
+
+var model = new Model();
+var mass = new Mass(Polygon.Rectangle(10,10),10);
+mass.Material = BuiltInMaterials.Trans;
+model.AddElement(mass);
+
+#!csharp
+
+var polygon = new Polygon((0,0,0), (0,-5,10), (10,-5,10), (10,0,0));
+var mc = new ModelCurve(polygon, BuiltInMaterials.YAxis);
+var polygonOnGroundPlane = polygon.TransformedPolygon(polygon.ToTransform().Inverted());
+var mc2 = new ModelCurve(polygonOnGroundPlane, BuiltInMaterials.XAxis);
+model.AddElement(mc);
+model.AddElement(mc2);
+return model;
